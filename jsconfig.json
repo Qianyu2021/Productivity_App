@@ -1,7 +1,19 @@
+
 {
   "compilerOptions": {
+    "baseUrl": ".",  // Base directory to resolve non-relative module names
     "paths": {
-      "@/*": ["./src/*"]
-    }
-  }
+      "@components/*": ["components/*"],  // Path alias to resolve components
+      "@utils/*": ["utils/*"]  // Path alias to resolve utilities
+    },
+    "target": "es6",  // Specify ECMAScript target version
+    "module": "commonjs"  // Specify module code generation
+  },
+  "include": [
+    "src/**/*"  // Files to be included in the program
+  ],
+  "exclude": [
+    "node_modules",  // Exclude node_modules from being part of the context
+    "**/node_modules/*"
+  ]
 }
