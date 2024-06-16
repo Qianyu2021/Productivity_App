@@ -1,0 +1,39 @@
+version: '3.8'
+services:
+  app:
+    build: ./backend
+    ports:
+      - "8801:8800" # Ensure this does not conflict with other projects
+    networks:
+      - app_network
+    depends_on:
+      - db
+    environment:
+      - NODE_ENV=development
+      - DATABASE_URL=postgresql://productivity:great@db:5434/productivity_web
+    volumes:
+      - ./backend:/usr/src/app/backend
+
+  db:
+    image: postgres:latest
+    ports:
+      - "5434:5432"  # enables connecting locally via psql
+    environment:
+      POSTGRES_DB: productivity_web
+      POSTGRES_USER: productivity  # Default is 'postgres' if not specified
+      POSTGRES_PASSWORD: great  # It's highly recommended to set a password for databases
+    volumes:
+      - postgres_data:/var/lib/postgresql/data  # Persist data between container restarts
+    networks:
+      - app_network
+
+volumes:
+  postgres_data:
+
+
+networks:
+  app_network:
+    driver: bridge
+
+
+
